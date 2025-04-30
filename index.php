@@ -12,13 +12,41 @@
   </head>
   <body class="container">
     <h1 class="text-center py-4">
-    <i class="bi bi-person-rolodex"></i>
+    <i class="bi bi-telegram"></i>
     Agenda Telefonica
   </h1>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     <i class="bi bi-plus-circle"></i>  
     Adicionar novo contato
     </button>
+    
+       <table class="table table-striped table-hover table-bordered mt-4">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">#</th>
+      <th scope="col"><i class="bi bi-person p-2"></i>Nome</th>
+      <th scope="col"><i class="bi bi-envelope p-2"></i>E-mail</th>
+      <th scope="col"><i class="bi bi-whatsapp p-2"></i>Telefone/Whatsapp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+      $sql = "SELECT * FROM contatos ORDER BY id DESC";
+      $rows = $con->query($sql);
+      if($rows->num_rows > 0){
+        while($row = $rows->fetch_assoc()){
+          echo '
+            <tr class="text-center">
+              <th scope="row">'.$row['id'].'</th>
+              <td>'.$row['nome'].'</td>
+              <td>'.$row['email'].'</td>
+              <td>'.$row['telefone'].'</td>
+            </tr>';
+        }
+      }
+    ?>
+  </tbody>
+</table>
 
     <form method="POST" action="actions/salvar.php">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
