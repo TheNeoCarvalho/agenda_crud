@@ -31,12 +31,11 @@
   </thead>
   <tbody>
     <?php
-      $resultados_por_pagina = 10;
+      $por_pagina = 5;
+      $pagina = $_GET['pagina'] ?? 1;
+      $inicio = ($pagina - 1) * $por_pagina;
 
-      $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-      $inicio = ($pagina - 1) * $resultados_por_pagina;
-
-      $sql = "SELECT * FROM contatos ORDER BY id DESC LIMIT $inicio, $resultados_por_pagina";
+      $sql = "SELECT * FROM contatos ORDER BY id DESC LIMIT $inicio, $por_pagina"; 
       $rows = $con->query($sql);
       if($rows->num_rows > 0){
         while($row = $rows->fetch_assoc()){
@@ -52,24 +51,25 @@
     ?>
   </tbody>
   <tfoot>
-    <tr class="text-center ">
+    <tr>
       <td colspan="4">
         <?php
+          $total = $con->query("SELECT COUNT(*) as total FROM contatos")->fetch_assoc()['total'];
 
-        $total = $con->query("SELECT COUNT(*) as total FROM contatos")->fetch_assoc()['total'];
-        $total_paginas = ceil($total / $resultados_por_pagina);
-
-        echo '<nav>
+          $total_paginas = ceil($total / $por_pagina);
+          echo '<nav>
         <ul class="pagination justify-content-center">';
-        for($i = 1; $i <= $total_paginas; $i++){
-          $active = ($i == $pagina) ? 'active' : '';
+
+          for($i = 1; $i <= $total_paginas; $i++){
+            $active = ($i == $pagina) ? 'active' : '';
           echo '<li class="page-item '.$active.'"><a class="page-link" href="?pagina='.$i.'">'.$i.'</a></li>';
-        }
-        echo '</ul></nav>';
+          }
+          echo '</ul></nav>';
         ?>
       </td>
     </tr>
   </tfoot>
+  
 </table>
 
     <form method="POST" action="actions/salvar.php">
