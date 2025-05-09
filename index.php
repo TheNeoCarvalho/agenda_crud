@@ -20,18 +20,19 @@
     Adicionar novo contato
     </button>
     
-       <table class="table table-striped table-hover table-bordered mt-4">
+  <table class="table table-striped table-hover table-bordered mt-4">
   <thead>
     <tr class="text-center">
       <th scope="col">#</th>
       <th scope="col"><i class="bi bi-person p-2"></i>Nome</th>
       <th scope="col"><i class="bi bi-envelope p-2"></i>E-mail</th>
       <th scope="col"><i class="bi bi-whatsapp p-2"></i>Telefone/Whatsapp</th>
+      <th scope="col">Ações</th>
     </tr> 
   </thead>
   <tbody>
     <?php
-      $por_pagina = 5;
+      $por_pagina = 10;
       $pagina = $_GET['pagina'] ?? 1;
       $inicio = ($pagina - 1) * $por_pagina;
 
@@ -45,6 +46,18 @@
               <td>'.$row['nome'].'</td>
               <td>'.$row['email'].'</td>
               <td>'.$row['telefone'].'</td>
+              <td>
+                <a class="btn btn-danger" href="actions/deletar.php?id='.$row['id'].'">
+                  <i class="bi bi-trash"></i>
+                  Deletar
+                </a>
+
+                <a class="btn btn-primary" href="actions/editar.php?id='.$row['id'].'">
+                  <i class="bi bi-eye"></i>
+                  Editar
+                </a>
+
+              </td>
             </tr>';
         }
       }
