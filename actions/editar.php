@@ -6,7 +6,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
 
-    $sql = "UPDATE FROM contatos SET nome='$nome', email='$email', telefone='$telefone' WHERE id = ".$_GET['id'];
+    $sql = "UPDATE contatos SET nome='$nome', email='$email', telefone='$telefone' WHERE id = ".$_GET['id'];
 
     $con->query($sql);
     header("Location: ../index.php");
